@@ -485,7 +485,9 @@ if ($token_mismatch) {
         /* Needed to send the correct reply */
         'ajax_request',
         /* Permit to log out even if there is a token mismatch */
-        'old_usr'
+        'old_usr',
+        /* Needed to display session expiry msg */
+        'auth_fail'
     );
     /**
      * Allow changing themes in test/theme.php
