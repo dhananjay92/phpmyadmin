@@ -332,6 +332,13 @@ var AJAX = {
             PMA_ajaxShowMessage(data.error, false);
             AJAX.active = false;
             AJAX.xhr = null;
+            // check if redirectFlag is set. If set, redirect user to login page.
+            if (parseInt(data.redirectFlag) == 1) {
+                // Set flag to display session expiry msg on login screen.
+                window.location.href += '&auth_fail=1';
+                // User is taken to where he left off when session had expired.
+                location.reload();
+            }
         }
     },
     /**
