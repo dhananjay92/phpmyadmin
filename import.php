@@ -665,5 +665,4 @@ if ($go_sql) {
     $active_page = $goto;
     include '' . $goto;
 }
-
 ?>
