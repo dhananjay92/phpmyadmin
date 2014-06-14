@@ -298,6 +298,7 @@ class PMA_Error_Handler
         ) {
             foreach ($this->getErrors() as $error) {
                 if ($error instanceof PMA_Error) {
+                    echo 'instanceof PMA_Error ';
                     if (! $error->isDisplayed()) {
                         $retval .= $error->getDisplay();
                     }

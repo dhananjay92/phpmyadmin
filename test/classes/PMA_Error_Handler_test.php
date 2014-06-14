@@ -116,12 +116,12 @@ class PMA_Error_Handler_Test extends PHPUnit_Framework_TestCase
     public function testGetDispErrorsForDisplayFalse(
         $errno, $errstr, $errfile, $errline, $output_show, $output_hide
     ) {
-        // TODO: Add other test cases for all combination of 'sendErrorReports'
+        $this->object->handleError($errno, $errstr, $errfile, $errline);
+
+        // Case: 'sendErrorReports' is set to 'never'
         $GLOBALS['cfg']['SendErrorReports'] = 'never';
         $GLOBALS['cfg']['Error_Handler']['gather'] = true;
         $GLOBALS['cfg']['Error_Handler']['display'] = false;
-
-        $this->object->handleError($errno, $errstr, $errfile, $errline);
 
         $output = $this->object->getDispErrors();
 
@@ -130,6 +130,19 @@ class PMA_Error_Handler_Test extends PHPUnit_Framework_TestCase
         } else {
             $this->assertContains($output_hide, $output);
         }
+
+        // Case: 'sendErrorReports' is not set to 'never'
+        $GLOBALS['cfg']['SendErrorReports'] = 'ask';
+        $GLOBALS['cfg']['Error_Handler']['gather'] = true;
+        $GLOBALS['cfg']['Error_Handler']['display'] = false;
+
+        $output = $this->object->getDispErrors();
+        echo "\n#######################################################\n";
+        echo "errno:".$errno;
+        var_dump($output);
+        echo "\n#######################################################\n";
+        //assert here!!
+
     }
 
     /**
