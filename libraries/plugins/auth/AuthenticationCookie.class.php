@@ -86,6 +86,12 @@ class AuthenticationCookie extends AuthenticationPlugin
             if (! empty($conn_error)) {
 
                 $conn_error .= $login_link;
+                if (! empty($GLOBALS['no_activity'])) {
+                    // set redirectFlag to 1(true) to enable automatic redirection.
+                    $response->addJSON(
+                        'redirectFlag', '1'
+                    );
+                }
 
                 $response->addJSON(
                     'message',
@@ -100,6 +106,11 @@ class AuthenticationCookie extends AuthenticationPlugin
                         __('Your session has expired. Please log in again.') .
                         $login_link
                     )
+                );
+
+                // set redirectFlag to 1(true) to enable automatic redirection.
+                $response->addJSON(
+                    'redirectFlag', '1'
                 );
             }
             if (defined('TESTSUITE')) {
@@ -171,6 +182,10 @@ class AuthenticationCookie extends AuthenticationPlugin
         // Show error message
         if (! empty($conn_error)) {
             PMA_Message::rawError($conn_error)->display();
+        } 
+        elseif ( intval($_GET['auth_fail']) == 1 ) {
+            $msg = __('Your session has expired. Please log in again.');
+            PMA_Message::rawError($msg)->display();
         }
 
         echo "<noscript>\n";
